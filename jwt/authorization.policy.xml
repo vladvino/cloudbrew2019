@@ -1,0 +1,11 @@
+        <!-- Ensure Authorization header presence -->
+        <choose>
+            <when condition="@(!context.Request.Headers.ContainsKey("Authorization"))">
+                <return-response>
+                    <set-status code="401" reason="Unauthorized" />
+                    <set-header name="WWW-Authenticate" exists-action="append">
+                        <value>@("Bearer realm="+context.Request.OriginalUrl.Host)</value>
+                    </set-header>
+                </return-response>
+            </when>
+        </choose>

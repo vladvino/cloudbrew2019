@@ -1,0 +1,20 @@
+@httpbin = https://cloudbrew.azure-api.net/hb
+@token = Bearer 
+
+GET {{httpbin}}/get
+Authorization: {{token}}
+//Add tracing
+api-key: {{api-key}}
+ocp-apim-trace: true
+###
+POST {{httpbin}}/post
+Content-Type: application/json
+Authorization: {{token}}
+api-key: {{api-key}}
+ocp-apim-trace: true
+
+{
+    "Location": "CloudBrew 2019",
+    "time": "{{$localDatetime rfc1123}}"
+}
+###

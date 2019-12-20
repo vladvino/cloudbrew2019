@@ -1,0 +1,10 @@
+		<validate-jwt header-name="Authorization" require-scheme="Bearer">
+            <openid-config url="https://dev-ooh5exwz.auth0.com/.well-known/openid-configuration" />
+			<audiences>
+				<audience>@(context.Request.OriginalUrl.Host)</audience>
+			</audiences>
+			<!-- Issuer is provided via metadata and is validated automatically -->
+			<required-claims>
+				<claim name="sub" />
+			</required-claims>
+		</validate-jwt>

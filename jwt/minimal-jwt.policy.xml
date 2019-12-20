@@ -1,0 +1,9 @@
+        <validate-jwt header-name="Authorization" require-scheme="Bearer">
+        <!--    Using Bearer scheme is recommended by the spec and servers are required to support it -->
+        <!--    <validate-jwt token-value="@(context.Request.Headers["Authorization"][0])" require-scheme="Bearer"> -->
+        <!--    iss and exp claims and a signature are required -->
+        <!--    nbf claim is validated automatically, if present-->
+            <issuer-signing-keys>
+                <key>{{jwt-signing-key}}</key>
+            </issuer-signing-keys>
+        </validate-jwt>

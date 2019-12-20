@@ -1,0 +1,16 @@
+        <!-- These headers offer protection in cases where APIs are accessed from a browser -->
+        <set-header name="X-Content-Type-Options" exists-action="override"> <!-- Not useful for APIs responding only with JSON and correctly declaring content type -->
+            <value>nosniff</value>
+        <set-header name="X-XSS-Protection" exists-action="override"> <!-- Not useful for APIs responding with JSON only -->
+            <value>1; mode=block</value>
+        </set-header>
+        </set-header>
+        <set-header name="X-Frame-Options" exists-action="override">
+            <value>deny</value>
+        </set-header>
+        <set-header name="Content-Security-Policy" exists-action="override">
+            <value>default-src 'none'; frame-ancestors 'none'; sandbox</value>
+        </set-header>
+        <set-header name="Strict-Transport-Security" exists-action="override">
+            <value>max-age=31536000; includeSubDomains</value>
+        </set-header>

@@ -1,0 +1,1 @@
+		<rate-limit-by-key calls="20" renewal-period="1" counter-key="@(context.Request.IpAddress)" />

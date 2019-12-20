@@ -1,0 +1,25 @@
+		<validate-jwt header-name="Authorization" require-scheme="Bearer" output-token-variable-name="token">
+			<issuer-signing-keys>
+				<key>{{jwt-signing-key}}</key>
+			</issuer-signing-keys>
+			<audiences>
+				<audience>@(context.Request.OriginalUrl.Host)</audience>
+			</audiences>
+			<issuers>
+				<issuer>jwt.io</issuer>
+			</issuers>
+			<required-claims>
+				<claim name="sub" />
+				<claim name="scope" match="any">
+					<value>read</value>
+					<value>write</value>
+				</claim>
+			</required-claims>
+		</validate-jwt>
+		<choose>
+			<when condition="@(context.Request.Method == "POST" && !((Jwt)context.Variables["token"]).Claims["scope"].Contains("write"))">
+				<return-response>
+					<set-status code="403" reason="Forbidden" />
+				</return-response>
+			</when>
+		</choose>

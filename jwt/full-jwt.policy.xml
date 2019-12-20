@@ -1,0 +1,14 @@
+        <validate-jwt header-name="Authorization" require-scheme="Bearer">
+            <issuer-signing-keys>
+                <key>{{jwt-signing-key}}</key>
+            </issuer-signing-keys>
+            <audiences>
+                <audience>@(context.Request.OriginalUrl.Host)</audience>
+            </audiences>
+            <issuers>
+                <issuer>jwt.io</issuer>
+            </issuers>
+            <required-claims>
+                <claim name="sub"/>
+            </required-claims>
+        </validate-jwt>

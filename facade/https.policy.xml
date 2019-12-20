@@ -1,0 +1,13 @@
+		<!-- Force HTTPS -->
+		<choose>
+			<when condition="@(context.Request.OriginalUrl.Scheme == "http")">
+				<return-response>
+					<set-status code="301" reason="Moved Permanently" />
+					<set-header name="Location" exists-action="override">
+						<value>@("https" + context.Request.OriginalUrl.ToString().Substring(4))</value>
+					</set-header>
+					<set-body>
+					</set-body>
+				</return-response>
+			</when>
+		</choose>

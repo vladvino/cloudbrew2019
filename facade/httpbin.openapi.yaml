@@ -1,0 +1,64 @@
+openapi: 3.0.1
+info:
+  title: httpbin
+  description: API Management facade for a subset of an awesome httpbin.org API
+  version: "1.0"
+servers:
+  - url: https://httpbin.org
+paths:
+  /status/{code}:
+    get:
+      description: Returns provided HTTP Status code
+      operationId: status-get
+      parameters:
+        - name: code
+          in: path
+          description: Status code to return.
+          required: true
+          schema:
+            type: integer
+            default: 200
+            enum:
+              - 200
+      responses:
+        default:
+          description: Requested status code and empty body
+    post:
+      description: Returns provided HTTP Status code
+      operationId: status-post
+      parameters:
+        - name: code
+          in: path
+          description: Status code to return.
+          required: true
+          schema:
+            type: integer
+            default: 200
+            enum:
+              - 200
+      responses:
+        default:
+          description: Requested status code and empty body
+  /get:
+    get:
+      description: Returns GET data
+      operationId: get
+      responses:
+        200:
+          description: Request args, headers, origins, and url
+          content:
+            "application/json":
+              schema:
+                type: object
+  /post:
+    post:
+      description: Returns POST data
+      operationId: post
+      responses:
+        200:
+          description: Request args, data, headers, origins, and url
+          content:
+            "application/json":
+              schema:
+                type: object
+components: {}

@@ -1,0 +1,9 @@
+config:
+  target: https://cloudbrew.azure-api.net
+  phases:
+    - duration: 5
+      arrivalCount: 200
+scenarios:
+  - flow:
+      - get:
+          url: "/hb/status/200"

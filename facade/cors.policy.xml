@@ -1,0 +1,18 @@
+		<cors allow-credentials="true">
+			<allowed-origins>
+				<origin>https://contoso.com</origin>
+			</allowed-origins>
+			<allowed-methods>
+				<method>get</method>
+				<method>post</method>
+			</allowed-methods>
+			<allowed-headers>
+				<header>content-type</header>
+				<header>authorization</header>
+				<header>api-key</header>
+				<header>ocp-apim-trace</header>
+			</allowed-headers>
+			<expose-headers>
+				<header>*</header>
+			</expose-headers>
+		</cors>

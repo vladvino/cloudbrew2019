@@ -1,0 +1,28 @@
+@httpbin = https://httpbin.org
+//@httpbin = https://cloudbrew.azure-api.net/hb
+
+GET {{httpbin}}/get
+###
+POST {{httpbin}}/post
+Content-Type: application/json
+
+{
+    "Location": "CloudBrew 2019",
+    "time": "{{$localDatetime rfc1123}}"
+}
+###
+GET {{httpbin}}/status/404
+###
+POST {{httpbin}}/status/301
+###
+GET {{httpbin}}/delay/2
+###
+// Test CORS - simulated browser pre-flight request
+OPTIONS {{httpbin}}/get
+origin: https://fabrikam.com
+access-control-request-method: get
+access-control-request-headers: authorization
+
+// Add tracing
+api-key: {{api-key}}
+ocp-apim-trace: true

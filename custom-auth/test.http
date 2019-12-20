@@ -1,0 +1,7 @@
+@httpbin = https://cloudbrew.azure-api.net/hb
+
+GET {{httpbin}}/get
+Authorization: 12
+// Add tracing
+api-key: {{api-key}}
+ocp-apim-trace: true

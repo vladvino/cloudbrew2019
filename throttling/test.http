@@ -1,0 +1,4 @@
+@httpbin = https://cloudbrew.azure-api.net/hb
+
+// Test rate limit
+GET {{httpbin}}/status/200

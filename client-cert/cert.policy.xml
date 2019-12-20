@@ -1,0 +1,7 @@
+		<choose>
+			<when condition="@(context.Request.Certificate == null || !context.Request.Certificate.Verify() || context.Request.Certificate.Issuer != "CN=vlvinogr-rest-client" || context.Request.Certificate.SubjectName.Name != "CN=vlvinogr-rest-client")">
+				<return-response>
+					<set-status code="403" reason="Invalid client certificate" />
+				</return-response>
+			</when>
+		</choose>

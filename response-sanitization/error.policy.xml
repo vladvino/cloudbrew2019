@@ -1,0 +1,6 @@
+        <choose>
+            <when condition="@(context.Response.StatusCode >= 500)">
+                <set-status code="500" reason="INTERNAL SERVER ERROR" />
+                <set-body>We are aware of the issue and are working on it. Please try again later.</set-body>
+            </when>
+        </choose>

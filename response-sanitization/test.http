@@ -1,0 +1,19 @@
+@httpbin = https://cloudbrew.azure-api.net/hb
+
+// Test data masking
+POST {{httpbin}}/post
+Content-Type: application/json
+
+{
+    "ssn": "123-45-6789"
+}
+###
+
+// Test error message
+POST {{httpbin}}/status/500
+###
+
+// Test for Server header
+GET {{httpbin}}/get
+api-key: {{api-key}}
+ocp-apim-trace: true

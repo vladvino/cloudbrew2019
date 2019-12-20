@@ -1,0 +1,46 @@
+        <!-- Ensure Authorization header presence -->
+        <choose>
+            <when condition="@(!context.Request.Headers.ContainsKey("Authorization"))">
+                <return-response>
+                    <set-status code="401" reason="Unauthorized" />
+                    <set-header name="WWW-Authenticate" exists-action="append">
+                        <value>@("Bearer realm="+context.Request.OriginalUrl.Host)</value>
+                    </set-header>
+                </return-response>
+            </when>
+        </choose>
+        <!-- Check for cached authorization status for the subject -->
+        <cache-lookup-value key="@(context.Request.Headers.GetValueOrDefault("Authorization"))" variable-name="status"/>
+        <choose>
+            <!-- If cache miss call external authorizer -->
+            <when condition="@(!context.Variables.ContainsKey("status"))">
+                <!-- Call authorization endpoint -->
+                <send-request mode="copy" response-variable-name="response" timeout="10" ignore-error="false">
+                    <set-url>{{authorization-endpoint-url}}</set-url>
+                    <set-method>GET</set-method>
+                    <set-body />
+                </send-request>
+                <!-- Extract authorization status from authorizer's response -->
+                <set-variable name="status" value="@(((IResponse)context.Variables["response"]).StatusCode)"/>
+                <!-- Cache authorization result -->
+                <cache-store-value key="@(context.Request.Headers.GetValueOrDefault("Authorization"))" value="@((int)context.Variables["status"])" duration="5"/>
+                <!-- Log authorization status origin for demo purposes -->
+                <set-header name="X-Authorization-Source" exists-action="override">
+                    <value>Origin</value>
+                </set-header>
+            </when>
+            <otherwise>
+                <!-- Log authorization status origin for demo purposes -->
+                <set-header name="X-Authorization-Source" exists-action="override">
+                    <value>Cache</value>
+                </set-header>
+            </otherwise>
+        </choose>
+        <!-- Authorize the request -->
+        <choose>
+            <when condition="@((int)context.Variables["status"] != 200)">
+                <return-response>
+                    <set-status code="403" reason="Forbidden" />
+                </return-response>
+            </when>
+        </choose>
